@@ -1,0 +1,9 @@
+.product-container {
+	width: 80%;
+	margin-left: 2px;
+	border: 1px solid lightgray;
+}
+
+.container {
+	display: flex;
+}
