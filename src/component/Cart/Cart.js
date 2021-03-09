@@ -1,8 +1,9 @@
 import React from 'react';
+import '../Cart/Cart.css'
 
 const Cart = (props) => {
 	const cart = props.cart;
-	const total = cart.reduce((total, pd) => total + pd.price, 0);
+	const total = cart.reduce((total, pd) => total + pd.price * pd.quantity, 0);
 	const tax = parseFloat(total * 10 / 100).toFixed(2);
 
 	let shipping = 0;
@@ -28,7 +29,9 @@ const Cart = (props) => {
 					<p>Estimated Tax: $ {tax}</p>
 				</small>
 				<h4>Total Cost: $ {(total + shipping).toFixed(2)}</h4>
-
+				{
+					props.children
+				}
 
 			</div>
 
