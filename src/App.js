@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext, useState } from 'react';
 import './App.css';
 import Header from './component/header/Header';
 import Shop from './component/Shop/Shop';
@@ -12,12 +12,19 @@ import Review from './component/Review/Review';
 import Inventory from './component/Inventory/Inventory';
 import Error from './component/Error/Error';
 import ProductDetails from './component/productDetails/ProductDetails';
+import Login from './component/Login/Login';
+import Shipment from './component/Shipment/Shipment';
+import PrivateRoute from './component/PrivateRoute/PrivateRoute';
+
+export const UserContext = createContext()
 
 function App() {
+  const [loggedInUser, setLoggedInUser] = useState({})
   return (
-    <div>
-      <Header></Header>
+    <UserContext.Provider value={[loggedInUser, setLoggedInUser]}>
+      <h1>email:{loggedInUser.email}</h1>
       <Router>
+        <Header></Header>
         <Switch>
           <Route path='/shop'>
             <Shop></Shop>
@@ -25,15 +32,22 @@ function App() {
           <Route path='/review'>
             <Review></Review>
           </Route>
-          <Route path='/inventory'>
+          <Route path='/product/:productKey'>
+            <ProductDetails></ProductDetails>
+          </Route>
+          <PrivateRoute path='/inventory'>
             <Inventory></Inventory>
+          </PrivateRoute>
+          <PrivateRoute path='/shipment'>
+            <Shipment />
+          </PrivateRoute>
+          <Route path='/login'>
+            <Login></Login>
           </Route>
           <Route exact path='/'>
             <Shop></Shop>
           </Route>
-          <Route path='/product/:productKey'>
-            <ProductDetails></ProductDetails>
-          </Route>
+
           <Route path='*'>
             <Error></Error>
           </Route>
@@ -41,7 +55,7 @@ function App() {
       </Router>
 
 
-    </div>
+    </UserContext.Provider>
   );
 }
 
